@@ -1,11 +1,23 @@
 class GameView {
 
   constructor() {
-
   }
 
-  createBall( ballModel ) {
-    this.ballView = new BallView( ballModel );
+  createEventManager() {
+    this.eventManager = new EventManager( this.canvas );
+  }
+
+  createBall(ballModel) {
+    this.ballView = new BallView(ballModel);
+  }
+
+  drawAiming() {
+    this.aimingView.draw(this.context);
+  }
+
+  changeBallAimingDirection(aiming) {
+    var direction = aiming.getDirection();
+    this.aimingView.changeDirection(direction.lenX, direction.lenY);
   }
 
   drawBall() {
@@ -16,7 +28,15 @@ class GameView {
     this.ballView.moveTo(x, y);
   }
 
-  createCanvas( gameField ) {
+  createAimingView(aiming) {
+    this.aimingView = new AimingView(aiming);
+  }
+
+  destroyAimingView() {
+    this.aimingView = undefined;
+  }
+
+  createCanvas(gameField) {
 
     this.canvas = document.createElement('canvas');
     this.canvas.width = gameField.width;
@@ -32,6 +52,9 @@ class GameView {
   drawBackground() {
     this.context.fillStyle = 'rgb(0, 255, 255)';
     this.context.fillRect(0, 0, this.canvas.getAttribute('width'), this.canvas.getAttribute('height'));
+
+
+
   }
 
 }

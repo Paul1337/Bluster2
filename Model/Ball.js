@@ -12,6 +12,14 @@ class Ball {
     this.isFlying = false;
   }
 
+  createAiming(k) {
+    this.aiming = new Aiming(this.x, this.y, k);
+  }
+
+  destroyAiming() {
+    this.aiming = undefined;
+  }
+
   updatePosition() {
     this.x += this.spX;
     this.y += this.spY;
