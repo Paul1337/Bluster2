@@ -8,6 +8,8 @@ class Ball {
     this.spX = 0;
     this.spY = 0;
     this.sp = 5;
+
+    this.isFlying = false;
   }
 
   updatePosition() {
@@ -16,8 +18,10 @@ class Ball {
   }
 
   blust(angle) {
-    this.x = Math.sin(angle) * this.sp;
-    this.y = -Math.cos(angle) * this.sp;
+    this.isFlying = true;
+
+    this.spX = Math.sin(angle) * this.sp;
+    this.spY = -Math.cos(angle) * this.sp;
   }
 
 }

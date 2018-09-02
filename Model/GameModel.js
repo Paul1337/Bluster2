@@ -10,9 +10,10 @@ class GameModel {
     }
     this.gameFieldCreated(this.gameField);
 
-    var ballRadius = 4;
+    let ballRadius = 4;
     this.ball = new Ball(this.gameField.width / 2, this.gameField.height - ballRadius, ballRadius);
     this.ballCreated(this.ball);
+
   }
 
   startLoop() {
@@ -22,6 +23,13 @@ class GameModel {
   update() {
 
 
+    if (this.ball.isFlying) {
+      this.ball.updatePosition();
+      this.ballPositionUpdated( this.ball );
+    }
+
+
+    this.onRequested();
 
     var self = this;
     requestAnimationFrame(function() {

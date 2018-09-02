@@ -2,13 +2,18 @@ class GameView {
 
   constructor() {
 
-
   }
-
 
   createBall( ballModel ) {
     this.ballView = new BallView( ballModel );
-    this.ballView.draw( this.context );
+  }
+
+  drawBall() {
+    this.ballView.draw(this.context);
+  }
+
+  moveBallView(x, y) {
+    this.ballView.moveTo(x, y);
   }
 
   createCanvas( gameField ) {

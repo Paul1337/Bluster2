@@ -6,6 +6,11 @@ class BallView {
     this.r = ballModel.r;
   }
 
+  moveTo(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+
   draw(context) {
     context.beginPath();
     context.fillStyle = '#ff0000';
