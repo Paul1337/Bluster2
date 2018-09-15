@@ -1,31 +1,44 @@
 class GameView {
 
   constructor() {
+    this.ballViews = [];
   }
 
   createEventManager() {
-    this.eventManager = new EventManager( this.canvas );
+    this.eventManager = new EventManager( document );
   }
 
-  createBall(ballModel) {
-    this.ballView = new BallView(ballModel);
+  createBall(ball) {
+    this.ballViews.push(new BallView(ball));
   }
 
-  drawAiming() {
-    this.aimingView.draw(this.context);
+  createMapDrawer(brickWidth, brickHeight) {
+    this.mapDrawer = new MapDrawer(brickWidth, brickHeight);
   }
 
-  changeBallAimingDirection(aiming) {
-    var direction = aiming.getDirection();
-    this.aimingView.changeDirection(direction.lenX, direction.lenY);
+  drawMap(map) {
+    this.mapDrawer.drawMap(map, this.context);
   }
 
-  drawBall() {
-    this.ballView.draw(this.context);
+  tryDrawAiming() {
+    if (this.aimingView.isValid)
+      this.aimingView.draw(this.context);
   }
 
-  moveBallView(x, y) {
-    this.ballView.moveTo(x, y);
+  updateBallAimingDirection(direction) {
+    this.aimingView.setDirection(direction.lenX, direction.lenY);
+  }
+
+  updateBallAimingValidation(isValid) {
+    this.aimingView.setValidation(isValid);
+  }
+
+  drawBalls() {
+    this.ballViews.forEach(ballView => ballView.draw(this.context));
+  }
+
+  moveBallView(index, x, y) {
+    this.ballViews[index].moveTo(x, y);
   }
 
   createAimingView(aiming) {

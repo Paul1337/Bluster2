@@ -14,9 +14,10 @@ class BallView {
   draw(context) {
     context.beginPath();
     context.fillStyle = '#ff0000';
+    context.strokeStyle = '#ff0000';
     context.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-    context.stroke();
     context.fill();
+    // context.stroke();
     context.closePath();
   }
 

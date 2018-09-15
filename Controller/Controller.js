@@ -4,47 +4,32 @@ class Controller {
     this.model = model;
     this.gameView = new GameView();
 
-    var self = this;
-    this.model.gameFieldCreated = function(gameField) {
-      self.gameView.createCanvas(gameField);
-      self.gameView.createEventManager();
-      self.gameView.eventManager.mouseIsDragging = function(e) {
-        self.model.pullBallAiming(e.movementX, e.movementY);
-      }
-      self.gameView.eventManager.mouseIsDown = function(e) {
-        //e.offsetX, e.offsetY
-        self.model.createBallAiming();
-      }
-      self.gameView.eventManager.mouseIsUp = function(e) {
-        self.model.blustBall();
-      }
+    this.model.gameFieldManager.gameFieldCreated = gameField => {
+      this.gameView.createCanvas(gameField);
+      this.gameView.createEventManager();
+      this.gameView.eventManager.mouseIsDragging = e => this.model.tryPullBallAiming(e.movementX, e.movementY);
+      this.gameView.eventManager.mouseIsDown = e => this.model.tryCreateBallAiming();
+      this.gameView.eventManager.mouseIsUp = e => this.model.tryBlustBall();
     }
 
-    this.model.ballCreated = function(ball) {
-      self.gameView.createBall(ball);
+    this.model.ballManager.ballCreated = ball => this.gameView.createBall(ball);
+
+    this.model.onRequested = () => {
+      this.gameView.drawBackground();
+      this.gameView.drawBalls();
+      this.gameView.drawMap(this.model.mapManager.map);
+      if (this.gameView.aimingView !== undefined) this.gameView.tryDrawAiming();
     }
 
-    this.model.onRequested = function() {
-      self.gameView.drawBackground();
-      self.gameView.drawBall();
-      if (self.gameView.aimingView !== undefined) self.gameView.drawAiming();
-    }
+    this.model.ballManager.ballPositionUpdated = (index, ball) => this.gameView.moveBallView(index, ball.x, ball.y);
 
-    this.model.ballPositionUpdated = function(ball) {
-      self.gameView.moveBallView(ball.x, ball.y);
-    }
+    this.model.ballAimingManager.aimingCreated = aiming => this.gameView.createAimingView(aiming);
+    this.model.ballAimingManager.aimingDestroyed = () => this.gameView.destroyAimingView();
+    this.model.ballAimingManager.aimingPulled = aiming => this.gameView.updateBallAimingDirection(aiming.getDirection());
+    this.model.ballAimingManager.aimingValidationUpdated = validation => this.gameView.updateBallAimingValidation(validation);
 
-    this.model.ballAimingCreated = function(aiming) {
-      self.gameView.createAimingView(aiming);
-    }
+    this.model.mapManager.mapGenerated = () => this.gameView.createMapDrawer( BrickWidth, BrickHeight );
 
-    this.model.ballAimingDestroyed = function() {
-      self.gameView.destroyAimingView();
-    }
-
-    this.model.ballAimingUpdated = function(aiming) {
-      self.gameView.changeBallAimingDirection(aiming);
-    }
 
     this.model.init();
     this.model.startLoop();

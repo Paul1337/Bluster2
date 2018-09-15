@@ -5,6 +5,16 @@ class Aiming {
     this.yStart = yStart;
     this.k = k;
     this.vector = new Vector(0, 0);
+
+    this.isValid = false;
+  }
+
+  updateValidationByY(maxY) {
+    if (this.vector.y + this.yStart >= maxY) {
+      this.isValid = false;
+    } else {
+      this.isValid = true;
+    }
   }
 
   getDirection() {

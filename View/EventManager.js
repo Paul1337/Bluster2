@@ -8,24 +8,20 @@ class EventManager {
   }
 
   addEventListener() {
-    var self = this;
-
-    this.el.addEventListener("mousemove", function(e) {
-
-      if (self.mousePressed) {
-        if (self.mouseIsDragging !== undefined) self.mouseIsDragging(e);
+    this.el.addEventListener("mousemove", (e) => {
+      if (this.mousePressed) {
+        if (this.mouseIsDragging !== undefined) this.mouseIsDragging(e);
       }
-
     });
 
-    this.el.addEventListener("mousedown", function(e) {
-      self.mousePressed = true;
-      if (self.mouseIsDown !== undefined) self.mouseIsDown(e);
+    this.el.addEventListener("mousedown", (e) => {
+      this.mousePressed = true;
+      if (this.mouseIsDown !== undefined) this.mouseIsDown(e);
     });
 
-    this.el.addEventListener("mouseup", function(e) {
-      self.mousePressed = false;
-      if (self.mouseIsUp !== undefined) self.mouseIsUp(e);
+    this.el.addEventListener("mouseup", (e) => {
+      this.mousePressed = false;
+      if (this.mouseIsUp !== undefined) this.mouseIsUp(e);
     });
 
 

@@ -6,16 +6,22 @@ class AimingView {
 
     this.xLen = 0;
     this.yLen = 0;
+
+    this.isValid = false;
   }
 
-  changeDirection(xLen, yLen) {
+  setDirection(xLen, yLen) {
     this.xLen = xLen;
     this.yLen = yLen;
   }
 
+  setValidation(isValid) {
+    this.isValid = isValid;
+  }
+
   draw(context) {
     context.beginPath();
-    context.strokeStyle = 'rgb(255, 0, 0, 0.5)';
+    context.strokeStyle = 'rgb(255, 0, 0, 0.7)';
     context.moveTo(this.xStart, this.yStart);
     context.lineTo(this.xLen + this.xStart, this.yLen + this.yStart);
     context.stroke();
