@@ -5,10 +5,18 @@ class MapDrawer {
     this.brickHeight = brickHeight;
   }
 
+  setMaxMapHealth(maxhealth) {
+    this.maxMapHealth = maxhealth;
+  }
+
+  setMinMapHealth(minhealth) {
+    this.minMapHealth = minhealth;
+  }
+
   drawMap(map, context) {
 
-    map.forEach( (row, i) => {
-      row.forEach( (el, j) => {
+    map.forEach((row, i) => {
+      row.forEach((el, j) => {
         if (el > 0) {
           this.drawBrick(j * this.brickWidth, i * this.brickHeight, this.brickWidth, this.brickHeight, el, context);
         }
@@ -19,8 +27,8 @@ class MapDrawer {
 
   drawBrick(x, y, w, h, life, context) {
     context.beginPath();
-    let r = life * 255 / 80;
-    let g = 255 - (life - 7) * 255 / 80;
+    let r = (life - this.minMapHealth) / (this.maxMapHealth - this.minMapHealth) * 255;
+    let g = 255 - (life - this.maxMapHealth / 10 - this.minMapHealth) / (this.maxMapHealth - this.minMapHealth) * 255;
     let b = 0;
     context.lineWidth = 1;
     context.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';

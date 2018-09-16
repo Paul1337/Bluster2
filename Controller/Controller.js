@@ -33,6 +33,9 @@ class Controller {
     this.model.ballAimingManager.aimingPulled = aiming => this.gameView.updateBallAimingDirection(aiming.getDirection());
     this.model.ballAimingManager.aimingValidationUpdated = validation => this.gameView.updateBallAimingValidation(validation);
 
+    this.model.mapManager.minMapNumDefined = (min) => this.gameView.mapDrawer.setMinMapHealth(min);
+    this.model.mapManager.maxMapNumDefined = (max) => this.gameView.mapDrawer.setMaxMapHealth(max);
+
     this.model.mapManager.mapGenerated = () => this.gameView.createMapDrawer( BrickWidth, BrickHeight );
 
 

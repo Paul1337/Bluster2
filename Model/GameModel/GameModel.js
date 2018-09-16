@@ -13,6 +13,7 @@ class GameModel {
     this.ballManager.createBalls(this.gameFieldManager.gameField.width / 2, this.gameFieldManager.gameField.height, BallRadius);
 
     this.mapManager.generateStartMap();
+    this.mapManager.initMapParams();
     this.setCallbacks();
 
     this.level = 1;
@@ -58,9 +59,19 @@ class GameModel {
     if (this.mapManager.notLost()) {
       this.level ++;
       this.levelUpdated(this.level);
+      this.mapManager.updateDifficulty(this.level);
       this.mapManager.moveMapDown();
-      this.mapManager.createNewUpperBricks();
+      this.mapManager.createNewUpperBricks(this.level);
+
+      if (this.mapManager.destroyedBricks >= 3) {
+        let k = Math.floor(this.mapManager.destroyedBricks / 3);
+        for (let i = 0; i < k; i ++)
+          this.ballManager.addNewBall();
+        this.mapManager.destroyedBricks %= 3;
+      }
+
       this.ballManager.addNewBall();
+      
     } else {
       this.gameLost();
     }
