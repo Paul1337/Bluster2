@@ -18,7 +18,12 @@ class MapDrawer {
   }
 
   drawBrick(x, y, w, h, life, context) {
-    context.fillStyle = '#00ff00';
+    context.beginPath();
+    let r = life * 255 / 80;
+    let g = 255 - (life - 7) * 255 / 80;
+    let b = 0;
+    context.lineWidth = 1;
+    context.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
     context.strokeStyle = '#000000';
     context.fillRect(x, y, w, h);
     context.strokeRect(x, y, w, h);
@@ -26,6 +31,7 @@ class MapDrawer {
     context.fillStyle = '#000000';
     context.font = '15px Areal';
     context.fillText(life, x + this.brickWidth * 0.35, y + this.brickHeight * 0.75);
+    context.closePath();
   }
 
 }

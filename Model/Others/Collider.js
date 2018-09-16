@@ -26,10 +26,16 @@ class Collider {
                 w: BrickWidth,
                 h: BrickHeight
               }
-              if (this.ballCollidesBrickBottom(ball, brick)) {
-                this.ballCollidedBrickBottom(ball, i, j);
-              }
 
+              if (this.ballCollidesBrickBottom(ball, brick)) {
+                this.ballCollidedBrickBottom(ball, ballIndex, i, j);
+              } else if (this.ballCollidesBrickCeil(ball, brick)) {
+                this.ballCollidedBrickCeil(ball, ballIndex, i, j);
+              } else if (this.ballCollidesBrickLeft(ball, brick)) {
+                this.ballCollidedBrickLeft(ball, ballIndex, i, j);
+              } else if (this.ballCollidesBrickRight(ball, brick)) {
+                this.ballCollidedBrickRight(ball, ballIndex, i, j);
+              }
 
             }
           });
@@ -61,7 +67,7 @@ class Collider {
 
   ballCollidesTopWall(ball) {
 
-    if (ball.y - ball.r <= 0 && ball.isFlying)
+    if (ball.y - ball.r <= BrickHeight && ball.isFlying)
       return true;
 
     return false;
@@ -80,7 +86,7 @@ class Collider {
       x1: ball.prevX,
       y1: ball.prevY,
       x2: ball.x,
-      y2: ball.y
+      y2: ball.y - ball.r
     }
     let line2 = {
       x1: brick.x,
@@ -93,30 +99,55 @@ class Collider {
   }
 
   ballCollidesBrickCeil(ball, brick) {
+    let line1 = {
+      x1: ball.prevX,
+      y1: ball.prevY,
+      x2: ball.x,
+      y2: ball.y + ball.r
+    }
+    let line2 = {
+      x1: brick.x,
+      y1: brick.y,
+      x2: brick.x + brick.w,
+      y2: brick.y
+    }
 
+    return this.helper.linesCollide(line1, line2) && (ball.spY > 0);
   }
 
   ballCollidesBrickLeft(ball, brick) {
+    let line1 = {
+      x1: ball.prevX,
+      y1: ball.prevY,
+      x2: ball.x + ball.r,
+      y2: ball.y
+    }
+    let line2 = {
+      x1: brick.x,
+      y1: brick.y,
+      x2: brick.x,
+      y2: brick.y + brick.h
+    }
 
-
+    return this.helper.linesCollide(line1, line2) && (ball.spX > 0);
   }
 
   ballCollidesBrickRight(ball, brick) {
+    let line1 = {
+      x1: ball.prevX,
+      y1: ball.prevY,
+      x2: ball.x - ball.r,
+      y2: ball.y
+    }
+    let line2 = {
+      x1: brick.x + brick.w,
+      y1: brick.y,
+      x2: brick.x + brick.w,
+      y2: brick.y + brick.h
+    }
 
+    return this.helper.linesCollide(line1, line2) && (ball.spX < 0);
   }
-
-
-  // ballCollidesBrick(ball, brick) {
-  //
-  //   if (ball.x + ball.r >= brick.x && ball.x - ball.r <= brick.x + brick.w && ball.y - ball.r <= brick.y + brick.h && ball.y + ball.r >= brick.y) {
-  //     return true;
-  //   }
-  //   // if (ball.x + ball.r >= brick.x && ball.x - ball.r <= brick.x + brick.w) {
-  //   //   return  true;
-  //   // }
-  //
-  //   return false;
-  // }
 
 
 }

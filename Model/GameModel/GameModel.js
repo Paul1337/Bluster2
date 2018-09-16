@@ -14,6 +14,9 @@ class GameModel {
 
     this.mapManager.generateStartMap();
     this.setCallbacks();
+
+    this.level = 1;
+    this.levelIsDefined(this.level, this.ballManager.ballCounter);
   }
 
   setCallbacks() {
@@ -28,14 +31,39 @@ class GameModel {
         this.levelUp();
       }
     }
-    this.collider.ballCollidedBrickBottom = (ball, i, j) => {
-      // ball.y = i * BrickHeight + BrickHeight + ball.r;
+
+    this.collider.ballCollidedBrickBottom = (ball, ballIndex, i, j) => {
       ball.spY = -ball.spY;
+      // this.ballManager.moveBall(ballIndex, ball.x, i * BrickHeight + BrickHeight + ball.r);
+      this.mapManager.damageOn(i, j);
+    }
+
+    this.collider.ballCollidedBrickCeil = (ball, ballIndex, i, j) => {
+      ball.spY = -ball.spY;
+      this.mapManager.damageOn(i, j);
+    }
+
+    this.collider.ballCollidedBrickLeft = (ball, ballIndex, i, j) => {
+      ball.spX = -ball.spX;
+      this.mapManager.damageOn(i, j);
+    }
+
+    this.collider.ballCollidedBrickRight = (ball, ballIndex, i, j) => {
+      ball.spX = -ball.spX;
       this.mapManager.damageOn(i, j);
     }
   }
 
   levelUp() {
+    if (this.mapManager.notLost()) {
+      this.level ++;
+      this.levelUpdated(this.level);
+      this.mapManager.moveMapDown();
+      this.mapManager.createNewUpperBricks();
+      this.ballManager.addNewBall();
+    } else {
+      this.gameLost();
+    }
 
 
   }

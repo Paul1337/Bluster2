@@ -12,12 +12,17 @@ class Controller {
       this.gameView.eventManager.mouseIsUp = e => this.model.tryBlustBall();
     }
 
+    this.model.gameLost = () => this.gameView.lose();
+    this.model.levelUpdated = (level) => this.gameView.menuView.setLevel(level);
+    this.model.levelIsDefined = (level, balls) => this.gameView.createMenuView(level, balls);
+    this.model.ballManager.ballAmountUpdated = balls => this.gameView.menuView.setBalls(balls);
     this.model.ballManager.ballCreated = ball => this.gameView.createBall(ball);
 
     this.model.onRequested = () => {
       this.gameView.drawBackground();
       this.gameView.drawBalls();
       this.gameView.drawMap(this.model.mapManager.map);
+      this.gameView.drawMenu(this.model.gameFieldManager.gameField);
       if (this.gameView.aimingView !== undefined) this.gameView.tryDrawAiming();
     }
 

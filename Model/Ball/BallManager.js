@@ -2,9 +2,22 @@ class BallManager {
 
 
   constructor() {
-    this.ballCounter = 5;
+    this.ballCounter = 18;
     this.blusting = false;
     this.balls = [];
+  }
+
+  moveBall(i, x, y) {
+    this.balls[i].moveTo(x, y);
+    this.ballPositionUpdated(i, this.balls[i]);
+  }
+
+  addNewBall() {
+    this.ballCounter ++;
+    let newBall = new Ball(this.balls[0].x, this.balls[0].y, this.balls[0].r);
+    this.balls.push(newBall);
+    this.ballCreated(newBall);
+    this.ballAmountUpdated(this.ballCounter);
   }
 
   stopBallOnGround(ball, field) {

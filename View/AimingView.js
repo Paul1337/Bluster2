@@ -21,6 +21,7 @@ class AimingView {
 
   draw(context) {
     context.beginPath();
+    context.lineWidth = 1;
     context.strokeStyle = 'rgb(255, 0, 0, 0.7)';
     context.moveTo(this.xStart, this.yStart);
     context.lineTo(this.xLen + this.xStart, this.yLen + this.yStart);

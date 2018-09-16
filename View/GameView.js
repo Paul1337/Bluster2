@@ -4,12 +4,30 @@ class GameView {
     this.ballViews = [];
   }
 
+  createMenuView(level, balls) {
+    this.menuView = new MenuView(level, balls);
+  }
+
   createEventManager() {
     this.eventManager = new EventManager( document );
   }
 
+  lose() {
+    this.canvas.style.display = 'none';
+
+    let message = document.createElement('h3');
+    message.innerHTML = 'Вы проиграли!';
+    message.style = 'color: red; font-size: 50px; text-align: center;';
+    document.body.appendChild(message);
+
+  }
+
   createBall(ball) {
     this.ballViews.push(new BallView(ball));
+  }
+
+  drawMenu(field) {
+    this.menuView.draw(this.context, field);
   }
 
   createMapDrawer(brickWidth, brickHeight) {
@@ -57,6 +75,7 @@ class GameView {
     this.canvas.style.border = 'solid 3px green';
 
     this.context = this.canvas.getContext('2d');
+    this.context.webkitImageSmoothingEnabled=true;
 
     document.body.appendChild(this.canvas);
 

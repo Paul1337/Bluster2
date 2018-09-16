@@ -6,12 +6,17 @@ class Ball {
     this.r = r;
     this.spX = 0;
     this.spY = 0;
-    this.sp = 10;
+    this.sp = 8;
 
     this.prevX = x;
     this.prevY = y;
 
     this.isFlying = false;
+  }
+
+  moveTo(x, y) {
+    this.x = x;
+    this.y = y;
   }
 
   stop() {
