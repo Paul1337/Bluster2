@@ -31,7 +31,9 @@ class Collider {
                 this.ballCollidedBrickBottom(ball, ballIndex, i, j);
               } else if (this.ballCollidesBrickCeil(ball, brick)) {
                 this.ballCollidedBrickCeil(ball, ballIndex, i, j);
-              } else if (this.ballCollidesBrickLeft(ball, brick)) {
+              }
+
+              if (this.ballCollidesBrickLeft(ball, brick)) {
                 this.ballCollidedBrickLeft(ball, ballIndex, i, j);
               } else if (this.ballCollidesBrickRight(ball, brick)) {
                 this.ballCollidedBrickRight(ball, ballIndex, i, j);
